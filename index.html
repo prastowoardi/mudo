@@ -17,7 +17,11 @@
                                 <div id="username-message" style="color: #f00;"></div>
                             </div> 
                             <div class="inputBox"> 
-                                <input type="password" required id="password" required> <i>Password</i> 
+                                <input type="password" required id="password" required> <i>Password</i>
+                                <div id="eye-container" onclick="showHidePassword()">
+                                    <img id="open-eye" src="assets/view.png" alt="Open Eye">
+                                    <img id="closed-eye" src="assets/hide.png" alt="Closed Eye">
+                                </div> 
                                 <div id="password-message" style="color: #f00;"></div>
                             </div>
                             <div id="error-message"></div> 
@@ -33,4 +37,5 @@
         </section>
     </body>
     <script src="js/auth.js"></script>
+    <script src="js/general.js"></script>
 </html>

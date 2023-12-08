@@ -1,8 +1,8 @@
 function login() {
     clearErrorMessages();
 
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
     if (!username && !password) {
         displayErrorMessage("Username dan Password harus diisi");
@@ -19,30 +19,33 @@ function login() {
         return;
     }
 
-    var data = {
+    const data = {
         username: username,
         password: password
     };
 
-    var request = new XMLHttpRequest();
-
-    request.open('POST', 'https://api.mudoapi.tech/login', true);
-    request.setRequestHeader('Content-Type', 'application/json');
-
-    request.onreadystatechange = function () {
-        if (this.readyState === 4) {
-            console.log(this.responseText);
-
-            if (this.status === 200) {
-                console.log('Selamat anda berhasil login');
-            } else {
-                displayErrorMessage(this.statusText);
-            }
+    fetch('https://api.mudoapi.tech/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(body => {
+        console.log('Body:', body);
+        if (body.success) {
+            console.log('Selamat anda berhasil login');
+        } else {
+            displayErrorMessage('Terjadi kesalahan saat melakukan login');
         }
-    };
-
-    var body = JSON.stringify(data);
-    request.send(body);
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        displayErrorMessage('Terjadi kesalahan saat melakukan login');
+    });
 }
 
 function clearErrorMessages() {

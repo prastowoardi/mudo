@@ -40,7 +40,7 @@ function login() {
             console.log('Selamat anda berhasil login');
             window.location.href = "#";
         } else {
-            displayErrorMessage('Terjadi kesalahan saat melakukan login');
+            displayErrorMessage(body.message);
         }
     })
     .catch(error => {

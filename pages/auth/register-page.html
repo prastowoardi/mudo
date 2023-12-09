@@ -13,19 +13,15 @@
                 <h2>Sign Up</h2> 
                     <div class="form"> 
                         <div class="inputBox"> 
-                            <input type="text" required> <i>First Name</i> 
-                            <div id="first-name-message" style="color: #f00;"></div>
+                            <input type="text" id="name" required> <i><sup><b style="color: #f00;">*</b></sup> Name</i> 
+                            <div id="name-message" style="color: #f00;"></div>
                         </div> 
                         <div class="inputBox"> 
-                            <input type="text" required> <i>Last Name</i> 
-                            <div id="last-name-message" style="color: #f00;"></div>
-                        </div> 
-                        <div class="inputBox"> 
-                            <input type="text" required> <i>Email</i> 
-                            <div id="email-message" style="color: #f00;"></div>
+                            <input type="text" id="username" required> <i><sup><b style="color: #f00;">*</b></sup> Username</i> 
+                            <div id="username-message" style="color: #f00;"></div>
                         </div> 
                         <div class="inputBox">
-                            <input type="password" id="password" required> <i>Password</i>
+                            <input type="password" id="password" required> <i><sup><b style="color: #f00;">*</b></sup> Password</i>
                             <div id="eye-container-register" onclick="showHidePassword('password', 'eye-container-register', 'open-eye-register', 'closed-eye-register')">
                                 <img id="open-eye-register" src="../../assets/view.png" alt="Open Eye">
                                 <img id="closed-eye-register" src="../../assets/hide.png" alt="Closed Eye">
@@ -33,18 +29,20 @@
                             <div id="password-message" style="color: #f00;"></div>
                         </div>
                         <div class="inputBox">
-                            <input type="password" id="confirm-password" required> <i>Confirm Password</i>
+                            <input type="password" id="confirm-password" required> <i><sup><b style="color: #f00;">*</b></sup> Confirm Password</i>
                             <div id="eye-container-confirm" onclick="showHidePassword('confirm-password', 'eye-container-confirm', 'open-eye-confirm', 'closed-eye-confirm')">
                                 <img id="open-eye-confirm" src="../../assets/view.png" alt="Open Eye">
                                 <img id="closed-eye-confirm" src="../../assets/hide.png" alt="Closed Eye">
                             </div>
                             <div id="confirm-password-message" style="color: #f00;"></div>
                         </div>
+                        <div id="error-message"></div> 
                         <div class="links"> 
-                            <a href="#">Forgot Password</a> <a href="../../index.html">Login</a>
+                            <a href="#">Forgot Password</a> 
+                            <a href="../../index.html">Login</a>
                         </div>
                         <div class="inputBox">
-                            <input type="submit" value="SignUp"> 
+                            <input type="submit" value="SignUp" onclick="register()"> 
                         </div> 
                     </div>
                 </div> 

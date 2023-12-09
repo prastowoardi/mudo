@@ -15,18 +15,18 @@
                             <div class="inputBox"> 
                                 <input type="text" required id="username" required> <i>Username</i> 
                                 <div id="username-message" style="color: #f00;"></div>
-                            </div> 
+                            </div>
                             <div class="inputBox"> 
-                                <input type="password" required id="password" required> <i>Password</i>
-                                <div id="eye-container" onclick="showHidePassword()">
-                                    <img id="open-eye" src="assets/view.png" alt="Open Eye">
-                                    <img id="closed-eye" src="assets/hide.png" alt="Closed Eye">
+                                <input type="password" id="password" required> <i>Password</i>
+                                <div id="eye-container-login" onclick="showHidePassword('password', 'eye-container-login', 'open-eye-login', 'closed-eye-login')">
+                                    <img id="open-eye-login" src="assets/view.png" alt="Open Eye">
+                                    <img id="closed-eye-login" src="assets/hide.png" alt="Closed Eye">
                                 </div> 
                                 <div id="password-message" style="color: #f00;"></div>
                             </div>
                             <div id="error-message"></div> 
                             <div class="links"> 
-                                <a href="#">Forgot Password</a> <a href="register-page.html">Signup</a>
+                                <a href="#">Forgot Password</a> <a href="./pages/auth/register-page.html">SignUp</a>
                             </div>
                             <div class="inputBox">
                                 <input type="submit" value="Login" onclick="login()"> 

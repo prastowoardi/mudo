@@ -208,3 +208,29 @@ input[type="submit"]:active {
 #closed-eye-confirm {
   display: none;
 }
+
+#registration-success-message {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#login-button-container,
+#signup-button-container {
+  margin-top: 20px;
+}
+
+#login-button-container input,
+#signup-button-container input {
+  padding: 10px;
+  background: #0f0;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.35em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+#login-button-container input:hover,
+#signup-button-container input:hover {
+  opacity: 0.8;
+}

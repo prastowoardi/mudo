@@ -18,3 +18,7 @@ function showHidePassword(inputId, eyeContainerId, openEyeId, closedEyeId) {
         console.error("One or more elements not found.");
     }
 }
+
+function redirectToLogin() {
+    window.location.href = "../../index.html";
+}

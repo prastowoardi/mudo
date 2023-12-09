@@ -1,8 +1,8 @@
 function login() {
     clearErrorMessages();
 
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
     if (!username && !password) {
         displayErrorMessage("Username dan Password harus diisi");
@@ -19,36 +19,114 @@ function login() {
         return;
     }
 
-    var data = {
+    const data = {
         username: username,
         password: password
     };
 
-    var request = new XMLHttpRequest();
-
-    request.open('POST', 'https://api.mudoapi.tech/login', true);
-    request.setRequestHeader('Content-Type', 'application/json');
-
-    request.onreadystatechange = function () {
-        if (this.readyState === 4) {
-            console.log(this.responseText);
-
-            if (this.status === 200) {
-                console.log('Selamat anda berhasil login');
-            } else {
-                displayErrorMessage(this.statusText);
-            }
+    fetch('https://api.mudoapi.tech/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(body => {
+        console.log('Body:', body);
+        if (body.success) {
+            console.log('Selamat anda berhasil login');
+            window.location.href = "#";
+        } else {
+            displayErrorMessage(body.message);
         }
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        displayErrorMessage('Terjadi kesalahan saat melakukan login');
+    });
+}
+
+function register() {
+    clearErrorMessages();
+
+    const name = document.getElementById('name').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    const fields = [
+        { field: 'name', value: name, message: 'Nama harus diisi' },
+        { field: 'username', value: username, message: 'Username harus diisi' },
+        { field: 'password', value: password, message: 'Password harus diisi' },
+        { field: 'confirm-password', value: confirmPassword, message: 'Konfirmasi Password harus diisi' }
+    ];
+
+    fields.forEach(field => {
+        if (!field.value) {
+            displayFieldMessage(field.field, field.message);
+        }
+    });
+
+    if (password.length < 8) {
+        displayFieldMessage('password', 'Password minimal 8 karakter');
+        return;
+    } else {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
+        if (!passwordRegex.test(password)) {
+            displayErrorMessage('Password harus memiliki angka dan karakter')
+            return;
+        }
+    }
+
+    if (password !== confirmPassword) {
+        displayFieldMessage('confirm-password', 'Konfirmasi Password tidak cocok');
+        return;
+    }
+
+    const data = {
+        name: name,
+        username: username,
+        password: password,
+        roleId: 1,
     };
 
-    var body = JSON.stringify(data);
-    request.send(body);
+    fetch('https://api.mudoapi.tech/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            return response.json();
+        })
+        .then(body => {
+            console.log('Body:', body);
+            if (body.success) {
+                console.log('Selamat anda berhasil Mendaftar');
+                successRegistration();
+            } else {
+                console.log(body.message);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch Error:', error);
+            displayErrorMessage(body.message);
+        });
 }
 
 function clearErrorMessages() {
-    document.getElementById("error-message").innerHTML = "";
-    document.getElementById("username-message").innerHTML = "";
-    document.getElementById("password-message").innerHTML = "";
+    const errorFields = ["name", "username", "password", "confirm-password"];
+
+    errorFields.forEach(fieldName => {
+        const element = document.getElementById(fieldName + "-message");
+        if (element) {
+            element.innerHTML = "";
+        }
+    });
 }
 
 function displayErrorMessage(message) {
@@ -56,5 +134,27 @@ function displayErrorMessage(message) {
 }
 
 function displayFieldMessage(fieldName, message) {
-    document.getElementById(fieldName + "-message").innerHTML = message;
+    const element = document.getElementById(fieldName + "-message");
+    if (element) {
+        element.innerHTML = message;
+    }
+}
+
+function successRegistration() {
+    console.log("successRegistration function called");
+
+    const registrationSuccessMessage = document.getElementById("registration-success-message");
+    const loginButtonContainer = document.getElementById("login-button-container");
+    const signupButtonContainer = document.getElementById("signup-button-container");
+    const registrationForm = document.querySelector('.signin .content .form');
+    const h2Element = document.querySelector('.signin .content h2');
+
+    if (h2Element) {
+        h2Element.textContent = "Berhasil"; // Use textContent to set the text
+    }
+
+    registrationForm.style.display = 'none';
+    registrationSuccessMessage.style.display = "block";
+    loginButtonContainer.style.display = "block";
+    signupButtonContainer.style.display = "none";
 }

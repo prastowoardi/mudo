@@ -70,6 +70,17 @@ function register() {
         }
     });
 
+    if (password.length < 8) {
+        displayFieldMessage('password', 'Password minimal 8 karakter');
+        return;
+    } else {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
+        if (!passwordRegex.test(password)) {
+            displayErrorMessage('Password harus memiliki angka dan karakter')
+            return;
+        }
+    }
+
     if (password !== confirmPassword) {
         displayFieldMessage('confirm-password', 'Konfirmasi Password tidak cocok');
         return;
@@ -96,7 +107,7 @@ function register() {
             console.log('Body:', body);
             if (body.success) {
                 console.log('Selamat anda berhasil Mendaftar');
-                window.location.href = "#";
+                successRegistration();
             } else {
                 console.log(body.message);
             }
@@ -127,4 +138,23 @@ function displayFieldMessage(fieldName, message) {
     if (element) {
         element.innerHTML = message;
     }
+}
+
+function successRegistration() {
+    console.log("successRegistration function called");
+
+    const registrationSuccessMessage = document.getElementById("registration-success-message");
+    const loginButtonContainer = document.getElementById("login-button-container");
+    const signupButtonContainer = document.getElementById("signup-button-container");
+    const registrationForm = document.querySelector('.signin .content .form');
+    const h2Element = document.querySelector('.signin .content h2');
+
+    if (h2Element) {
+        h2Element.textContent = "Berhasil"; // Use textContent to set the text
+    }
+
+    registrationForm.style.display = 'none';
+    registrationSuccessMessage.style.display = "block";
+    loginButtonContainer.style.display = "block";
+    signupButtonContainer.style.display = "none";
 }

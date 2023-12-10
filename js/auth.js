@@ -1,8 +1,10 @@
+const username = document.getElementById("username").value;
+const password = document.getElementById("password").value;
+const name = document.getElementById('name').value;
+const confirmPassword = document.getElementById('confirm-password').value;
+
 function login() {
     clearErrorMessages();
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
 
     if (!username && !password) {
         displayErrorMessage("Username dan Password harus diisi");
@@ -51,11 +53,6 @@ function login() {
 
 function register() {
     clearErrorMessages();
-
-    const name = document.getElementById('name').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
 
     const fields = [
         { field: 'name', value: name, message: 'Nama harus diisi' },

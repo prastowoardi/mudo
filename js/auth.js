@@ -1,8 +1,8 @@
 function login() {
-    clearErrorMessages();
-
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+
+    clearErrorMessages();
 
     if (!username && !password) {
         displayErrorMessage("Username dan Password harus diisi");
@@ -50,12 +50,12 @@ function login() {
 }
 
 function register() {
-    clearErrorMessages();
-
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
     const name = document.getElementById('name').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
+
+    clearErrorMessages();
 
     const fields = [
         { field: 'name', value: name, message: 'Nama harus diisi' },
@@ -70,13 +70,16 @@ function register() {
         }
     });
 
-    if (password.length < 8) {
+    if (!password) {
+        displayFieldMessage('password', 'Password harus diisi');
+        return;
+    } else if (password.length > 0 && password.length < 8) {
         displayFieldMessage('password', 'Password minimal 8 karakter');
         return;
     } else {
         const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
         if (!passwordRegex.test(password)) {
-            displayErrorMessage('Password harus memiliki angka dan karakter')
+            displayErrorMessage('Password harus memiliki angka dan spesial karakter')
             return;
         }
     }

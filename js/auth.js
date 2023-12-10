@@ -73,15 +73,17 @@ function register() {
     if (!password) {
         displayFieldMessage('password', 'Password harus diisi');
         return;
-    } else if (password.length > 0 && password.length < 8) {
+    } 
+    
+    if (password.length < 8) {
         displayFieldMessage('password', 'Password minimal 8 karakter');
         return;
-    } else {
-        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
-        if (!passwordRegex.test(password)) {
-            displayErrorMessage('Password harus memiliki angka dan spesial karakter')
-            return;
-        }
+    } 
+
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
+    if (!passwordRegex.test(password)) {
+        displayErrorMessage('Password harus memiliki angka dan spesial karakter')
+        return;
     }
 
     if (password !== confirmPassword) {

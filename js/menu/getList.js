@@ -12,12 +12,8 @@ function getList() {
         });
 }
 
-const menuListContainer = document.getElementById("menu-list-container");
-const detailMenuContainer = document.querySelector(".detail-menu");
 function displayMenuList(menuList) {
     const listMenu = document.getElementById("data-menu");
-    
-    
     listMenu.innerHTML = "";
 
     if (!Array.isArray(menuList)) {
@@ -31,32 +27,39 @@ function displayMenuList(menuList) {
             <td>${index + 1}</td>
             <td>${menu.name}</td>
             <td>${menu.description}</td>
-            <td>${menu.price}</td>
+            <td>${menu.priceFormatted}</td>
             <td><button onclick="showDetail(${menu.id})">Detail</button></td>
         `;
-        
+
         listMenu.appendChild(row);
     });
 }
 
 function showDetail(menuId) {
-    console.log(`Handling action for menu ID ${menuId}`);
-    fetchMenuDetail(menuId);
-    menuListContainer.classList.add('none');
-    detailMenuContainer.classList.remove('block');
+    window.location.href = `menu.html?id=${menuId}`;
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const menuId = urlParams.get('id');
+
+    if (menuId) {
+        fetchMenuDetail(menuId);
+    } else {
+        console.error('Menu ID is missing in the URL');
+    }
+});
 
 function displayMenuDetail(menu) {
     const detailContainer = document.querySelector(".detail-menu");
 
     detailContainer.innerHTML = `
         <h2>${menu.name}</h2>
-        <img src="${menu.imageUrl}" alt="${menu.name}">
+        <img src="${menu.imageUrl}" width="300px" height="300px" alt="${menu.name}">
         <p>Description: ${menu.description}</p>
         <p>Type: ${menu.type}</p>
         <p>Price: ${menu.priceFormatted}</p>
-        <p>Created At: ${menu.createdAt}</p>
-        <p>Updated At: ${menu.updatedAt}</p>
     `;
 }
 

@@ -1,3 +1,9 @@
+function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+        login();
+    }
+}
+
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;

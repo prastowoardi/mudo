@@ -22,3 +22,7 @@ function showHidePassword(inputId, eyeContainerId, openEyeId, closedEyeId) {
 function redirectToLogin() {
     window.location.href = "../../index.html";
 }
+
+function goBack() {
+    window.history.back();
+}

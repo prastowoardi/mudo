@@ -12,6 +12,12 @@ function getList() {
         });
 }
 
+function attachDetailButtonHandler(button, menuId) {
+    button.addEventListener("click", function() {
+        showDetail(menuId);
+    });
+}
+
 function displayMenuList(menuList) {
     const listMenu = document.getElementById("data-menu");
     listMenu.innerHTML = "";
@@ -23,20 +29,26 @@ function displayMenuList(menuList) {
 
     menuList.forEach((menu, index) => {
         const row = document.createElement("tr");
+        const detailButton = document.createElement("button");
+        detailButton.textContent = "Detail";
+        attachDetailButtonHandler(detailButton, menu.id);
+
         row.innerHTML = `
             <td>${index + 1}</td>
             <td>${menu.name}</td>
             <td>${menu.description}</td>
             <td>${menu.priceFormatted}</td>
-            <td><button onclick="showDetail(${menu.id})">Detail</button></td>
         `;
+        const actionCell = document.createElement("td");
+        actionCell.appendChild(detailButton);
+        row.appendChild(actionCell);
 
         listMenu.appendChild(row);
     });
 }
 
 function showDetail(menuId) {
-    window.location.href = `menu.html?id=${menuId}`;
+    window.location.href = `detail-menu.html?id=${menuId}`;
 }
 
 
@@ -46,34 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (menuId) {
         fetchMenuDetail(menuId);
-    } else {
-        console.error('Menu ID is missing in the URL');
     }
 });
-
-function displayMenuDetail(menu) {
-    const detailContainer = document.querySelector(".detail-menu");
-
-    detailContainer.innerHTML = `
-        <h2>${menu.name}</h2>
-        <img src="${menu.imageUrl}" width="300px" height="300px" alt="${menu.name}">
-        <p>Description: ${menu.description}</p>
-        <p>Type: ${menu.type}</p>
-        <p>Price: ${menu.priceFormatted}</p>
-    `;
-}
-
-function fetchMenuDetail(menuId) {
-    fetch(`https://api.mudoapi.tech/menu/${menuId}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Detail Menu Response:', data);
-            const menuDetail = data.data;
-            displayMenuDetail(menuDetail);
-        })
-        .catch(error => {
-            console.error('Error fetching menu detail:', error);
-        });
-}
 
 document.addEventListener("DOMContentLoaded", getList);

@@ -235,3 +235,59 @@ input[type="submit"]:active {
 #signup-button-container input:hover {
   opacity: 0.8;
 }
+
+/* CSS */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #333;
+  z-index: 1000;
+  padding: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+nav button {
+  background-color: #8a8282;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Detail Menu */
+body .detail-menu {
+  flex: 1;
+  color: #fff;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 50px;
+}
+
+.detail-menu H2 {
+  font-size: 38px;
+}
+.centered {
+  text-align: center; 
+}
+
+.detail-menu img {
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-menu table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.detail-menu th, td {
+  padding: 8px;
+  text-align: left;
+}

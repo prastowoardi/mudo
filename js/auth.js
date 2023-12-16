@@ -38,7 +38,7 @@ function login() {
         console.log('Body:', body);
         if (body.success) {
             console.log('Selamat anda berhasil login');
-            window.location.href = "../pages/menu/menu.html";
+            window.location.href = "../pages/menu/index.html";
         } else {
             displayErrorMessage(body.message);
         }

@@ -1,7 +1,5 @@
-document.addEventListener("DOMContentLoaded", getList);
-
-function getList() {
-    fetch('https://api.mudoapi.tech/menus')
+function getList(page) {
+    fetch(`https://api.mudoapi.tech/menus?perPage=10&page=${page}`)
         .then(response => response.json())
         .then(data => {
             const menuData = data.data.Data;
@@ -55,10 +53,11 @@ function showDetail(menuId) {
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const menuId = urlParams.get('id');
+    const pageId = urlParams.get('page');
 
     if (menuId) {
         fetchMenuDetail(menuId);
     }
-});
 
-document.addEventListener("DOMContentLoaded", getList);
+    getList(pageId);
+});

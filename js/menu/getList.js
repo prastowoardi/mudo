@@ -1,9 +1,30 @@
 function getList(page) {
-    fetch(`https://api.mudoapi.tech/menus?perPage=10&page=${page}`)
+    fetch(`https://api.mudoapi.tech/menus?perPage=1000&page=${page}`)
         .then(response => response.json())
         .then(data => {
             const menuData = data.data.Data;
-            displayMenuList(menuData);
+            const table = new DataTable('#tableMenu');
+
+            table.on('page', function( ){
+                console.log(this)
+            });
+
+            menuData.forEach((menu, index) => {
+                const detailButton = `<button data-menu-id="${menu.id}" class="detail-button">Detail</button>`;
+                table.row
+                .add([
+                    index + 1,
+                    menu.name,
+                    menu.description,
+                    menu.priceFormatted,
+                    detailButton
+                ])
+                .draw(false);
+            })
+            $('#tableMenu').on('click', '.detail-button', function() {
+                const menuId = $(this).data('menu-id');
+                showDetail(menuId);
+            });
         })
         .catch(error => {
             console.error('Error fetching menu list:', error);
@@ -16,35 +37,6 @@ function attachDetailButtonHandler(button, menuId) {
     });
 }
 
-function displayMenuList(menuList) {
-    const listMenu = document.getElementById("data-menu");
-    listMenu.innerHTML = "";
-
-    if (!Array.isArray(menuList)) {
-        console.error('Menu list is not an array');
-        return;
-    }
-
-    menuList.forEach((menu, index) => {
-        const row = document.createElement("tr");
-        const detailButton = document.createElement("button");
-        detailButton.textContent = "Detail";
-        attachDetailButtonHandler(detailButton, menu.id);
-
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${menu.name}</td>
-            <td>${menu.description}</td>
-            <td>${menu.priceFormatted}</td>
-        `;
-        const actionCell = document.createElement("td");
-        actionCell.appendChild(detailButton);
-        row.appendChild(actionCell);
-
-        listMenu.appendChild(row);
-    });
-}
-
 function showDetail(menuId) {
     window.location.href = `detail-menu.html?id=${menuId}`;
 }
@@ -52,12 +44,7 @@ function showDetail(menuId) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const menuId = urlParams.get('id');
     const pageId = urlParams.get('page');
-
-    if (menuId) {
-        fetchMenuDetail(menuId);
-    }
 
     getList(pageId);
 });

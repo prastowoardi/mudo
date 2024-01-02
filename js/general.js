@@ -26,22 +26,3 @@ function redirectToLogin() {
 function goBack() {
     window.history.back();
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("searchInput");
-
-    searchInput.addEventListener("input", function(event) {
-        const searchTerm = event.target.value.toLowerCase(); // Mendapatkan nilai dari input dan mengubahnya ke huruf kecil
-
-        const menuItems = document.querySelectorAll("#data-menu tr");
-
-        menuItems.forEach(item => {
-            const itemContent = item.textContent.toLowerCase();
-            if (itemContent.includes(searchTerm)) {
-                item.style.display = "table-row"; // Menampilkan item jika cocok dengan kata kunci
-            } else {
-                item.style.display = "none"; // Menyembunyikan item jika tidak cocok dengan kata kunci
-            }
-        });
-    });
-});

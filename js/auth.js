@@ -44,6 +44,8 @@ function login() {
         console.log('Body:', body);
         if (body.success) {
             console.log('Selamat anda berhasil login');
+            authToken = body.data.token;
+            localStorage.setItem('authToken', authToken);
             window.location.href = "../pages/menu/index.html";
         } else {
             displayErrorMessage(body.message);

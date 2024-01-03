@@ -1,64 +1,95 @@
-document.addEventListener("DOMContentLoaded", getList);
-
-function getList() {
-    fetch('https://api.mudoapi.tech/menus')
+function getList(page) {
+    fetch(`https://api.mudoapi.tech/menus?perPage=1000&page=${page}`)
         .then(response => response.json())
         .then(data => {
             const menuData = data.data.Data;
-            displayMenuList(menuData);
+            const table = $('#tableMenu').DataTable({
+                ordering: false,
+                info: false
+            });
+
+            menuData.forEach((menu, index) => {
+                const action = `
+                    <button data-menu-id="${menu.id}" class="detail-button">Detail</button>
+                    <button data-menu-id="${menu.id}" class="delete-button">Delete</button>
+                `;
+                table.row
+                    .add([
+                        index + 1,
+                        menu.name,
+                        menu.description,
+                        menu.priceFormatted,
+                        action
+                    ])
+                    .draw(false);
+            });
+
+            $('#tableMenu').on('click', '.detail-button', function() {
+                const menuId = $(this).data('menu-id');
+                showDetail(menuId);
+            });
+
+            $('#tableMenu').on('click', '.delete-button', function() {
+                const menuId = $(this).data('menu-id');
+                deleteMenu(menuId);
+            });
         })
         .catch(error => {
             console.error('Error fetching menu list:', error);
         });
 }
 
-function attachDetailButtonHandler(button, menuId) {
-    button.addEventListener("click", function() {
-        showDetail(menuId);
-    });
-}
+function deleteMenu(menuId) {
+    const confirmed = window.confirm("Apakah Anda yakin ingin menghapus menu ini?");
+    if (confirmed) {
+        const authToken = localStorage.getItem('authToken');
+        fetch(`https://api.mudoapi.tech/menu/${menuId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Delete failed.');
+                });
+            }
+            return Promise.resolve();
+        })
+        .then(() => {
+            localStorage.setItem('successMessage', 'Penghapusan berhasil.');
 
-function displayMenuList(menuList) {
-    const listMenu = document.getElementById("data-menu");
-    listMenu.innerHTML = "";
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error deleting menu:', error.message);
 
-    if (!Array.isArray(menuList)) {
-        console.error('Menu list is not an array');
-        return;
+            const errorMessageElement = document.getElementById('alert');
+            if (errorMessageElement) {
+                errorMessageElement.textContent = error.message || 'Terjadi kesalahan saat menghapus.';
+            }
+        });
     }
-
-    menuList.forEach((menu, index) => {
-        const row = document.createElement("tr");
-        const detailButton = document.createElement("button");
-        detailButton.textContent = "Detail";
-        attachDetailButtonHandler(detailButton, menu.id);
-
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${menu.name}</td>
-            <td>${menu.description}</td>
-            <td>${menu.priceFormatted}</td>
-        `;
-        const actionCell = document.createElement("td");
-        actionCell.appendChild(detailButton);
-        row.appendChild(actionCell);
-
-        listMenu.appendChild(row);
-    });
 }
 
 function showDetail(menuId) {
     window.location.href = `detail-menu.html?id=${menuId}`;
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const menuId = urlParams.get('id');
+    const successMessage = localStorage.getItem('successMessage');
 
-    if (menuId) {
-        fetchMenuDetail(menuId);
+    if (successMessage) {
+        const errorMessageElement = document.getElementById('alert');
+        if (errorMessageElement) {
+            errorMessageElement.textContent = successMessage;
+        }
+        localStorage.removeItem('successMessage');
     }
-});
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageId = urlParams.get('page');
 
-document.addEventListener("DOMContentLoaded", getList);
+    getList(pageId);
+});

@@ -40,8 +40,19 @@ function getList(page) {
 }
 
 function deleteMenu(menuId) {
-    const confirmed = window.confirm("Apakah Anda yakin ingin menghapus menu ini?");
-    if (confirmed) {
+    const modal = document.getElementById('modal-confirmation');
+
+    function openModal() {
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    openModal();
+
+    document.getElementById('confirmDelete').addEventListener('click', function() {
         const authToken = localStorage.getItem('authToken');
         fetch(`https://api.mudoapi.tech/menu/${menuId}`, {
             method: 'DELETE',
@@ -59,18 +70,22 @@ function deleteMenu(menuId) {
         })
         .then(() => {
             localStorage.setItem('successMessage', 'Penghapusan berhasil.');
-
             location.reload();
         })
         .catch(error => {
-            console.error('Error deleting menu:', error.message);
-
             const errorMessageElement = document.getElementById('alert');
             if (errorMessageElement) {
                 errorMessageElement.textContent = error.message || 'Terjadi kesalahan saat menghapus.';
             }
         });
-    }
+        
+        closeModal();
+    });
+
+    const closeButtons = document.querySelectorAll('#close, .close');
+    closeButtons.forEach(function(btn) {
+        btn.addEventListener('click', closeModal);
+    });
 }
 
 function showDetail(menuId) {

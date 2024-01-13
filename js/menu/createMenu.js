@@ -29,12 +29,31 @@ $(document).ready(function () {
                 console.log(response);
 
                 $("#modal-form").css("display", "none");
-
+                localStorage.setItem('successMessage', 'Berhasil menambahkan menu');
                 location.reload();
             },
             error: function (error) {
                 console.error(error);
+                const errorMessageElement = document.getElementById('alert');
+                if (errorMessageElement) {
+                    errorMessageElement.textContent = error.message || 'Terjadi kesalahan saat menambah data.';
+                }
             },
         });
     });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const successMessage = localStorage.getItem('successMessage');
+
+    if (successMessage) {
+        const errorMessageElement = document.getElementById('alert');
+        if (errorMessageElement) {
+            errorMessageElement.textContent = successMessage;
+        }
+        localStorage.removeItem('successMessage');
+    }
+    const pageId = urlParams.get('page');
+
+    getList(pageId);
 });

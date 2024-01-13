@@ -12,17 +12,47 @@
     </head>
     <body>
         <p id="alert"></p>
+        <nav>
+            <button id="tambah">Tambah</button>
+        </nav>
         <table id="tableMenu" class="display" style="width: 100%">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Description</th>
+                    <th style="width: 75%;">Description</th>
                     <th>Price</th>
                     <th>Action</th>
                 </tr>
             </thead>
         </table>
+        <div id="modal-form" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="addForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+        
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+        
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" required>
+        
+                    <label for="type">Type</label>
+                    <select id="type" name="type" required>
+                        <option value="#">-- Pilih Tipe Menu --</option>
+                        <option value="main-dish">Main Dish</option>
+                        <option value="beverage">Beverage</option>
+                    </select>
+        
+                    <label for="imageURL">Image URL:</label>
+                    <input type="text" id="imageURL" name="imageURL" required>
+        
+                    <button type="button" id="submitForm">Submit</button>
+                </form>
+            </div>
+        </div>        
         <div id="modal-confirmation" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -33,5 +63,6 @@
         </div>
         <script src="../../js/menu/getList.js"></script>
         <script src="../../js/general.js"></script>
+        <script src="../../js/menu/createMenu.js"></script>
     </body> 
 </html>

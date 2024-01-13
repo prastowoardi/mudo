@@ -356,3 +356,56 @@ body .detail-menu {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+#modal-form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+#modal-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#modal-form input,
+#modal-form select,
+#modal-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#modal-form button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#modal-form button:hover {
+  background-color: #45a049;
+}
+
+#modal-form .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#modal-form .close:hover,
+#modal-form .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

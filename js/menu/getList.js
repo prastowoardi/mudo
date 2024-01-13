@@ -5,7 +5,6 @@ function getList(page) {
             const menuData = data.data.Data;
             const table = $('#tableMenu').DataTable({
                 ordering: false,
-                info: false
             });
 
             menuData.forEach((menu, index) => {

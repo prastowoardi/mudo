@@ -366,13 +366,19 @@ body .detail-menu {
 #modal-form {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #ccc;
   z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+#modal-form .modal-content {
+  padding: 20px;
+  background-color: white;
 }
 
 #modal-form label {
@@ -380,12 +386,27 @@ body .detail-menu {
   margin-bottom: 10px;
 }
 
+.required {
+  color: red;
+}
+
 #modal-form input,
-#modal-form select,
-#modal-form textarea {
+#modal-form select {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
+  border: 1px solid #111;
+}
+
+#modal-form textarea {
+  width: 100%;
+  min-height: 33px;
+  max-height: 145px;
+  resize: vertical;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid #111;
+  padding: 5px;
 }
 
 #modal-form button {
@@ -394,6 +415,8 @@ body .detail-menu {
   padding: 10px;
   border: none;
   cursor: pointer;
+  width: fit-content;
+  height: auto;
 }
 
 #modal-form button:hover {

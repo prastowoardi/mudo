@@ -270,6 +270,7 @@ nav {
   z-index: 1000;
   padding: 10px; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: rgb(255, 255, 255);
 }
 
 button {
@@ -371,7 +372,6 @@ body .detail-menu {
   top: 50%;
   transform: translate(-50%, -50%) !important;
   width: 60%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   background-color: transparent;
 }

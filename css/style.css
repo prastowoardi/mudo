@@ -391,6 +391,8 @@ body .detail-menu {
 #modal-form label {
   display: block;
   margin-bottom: 10px;
+  text-align: -webkit-left;
+  font-weight: 600;
 }
 
 .required {

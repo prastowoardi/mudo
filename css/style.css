@@ -184,6 +184,13 @@ input[type="submit"]:active {
   }
 }
 
+.error-message {
+  text-align: -webkit-left;
+  color: red;
+  margin-top: 0%;
+  margin-bottom: 8px;
+}
+
 #error-message {
   color: red;
 }

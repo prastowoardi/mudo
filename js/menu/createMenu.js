@@ -42,11 +42,11 @@ $(document).ready(function () {
             var errorMessage = label.text().replace(':', '').replace('*', '').trim();
         
             if (typeof formData[key] === 'string' && formData[key].trim() === "") {
-                displayErrorMessage(field, errorMessage + " wajib diisi");
+                displayErrorMessage(field, errorMessage + " is required");
             } else if (key === "price" && isNaN(formData[key])) {
-                displayErrorMessage(field, errorMessage + " wajib diisi");
+                displayErrorMessage(field, errorMessage + " is required");
             } else if (key === "type" && formData[key] === "#") {
-                displayErrorMessage(field, errorMessage + " harus dipilih");
+                displayErrorMessage(field, errorMessage + " must be chosen");
             }
         });
     });

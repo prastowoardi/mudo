@@ -5,8 +5,11 @@ $(document).ready(function () {
     });
 
     $(".close").on("click", function () {
-        $("#modal-form").css("display", "none");
-        $(".error-message").text("");
+        closeModal();
+    });
+
+    $("#price").on("input", function() {
+        this.value = this.value.replace(/\D/g, '');
     });
 
     $("#submitForm").on("click", function () {
@@ -15,42 +18,64 @@ $(document).ready(function () {
         var formData = {
             name: $("#name").val(),
             description: $("#description").val(),
-            price: parseInt($("#price").val()),
+            price: $("#price").val(),
             type: $("#type").val(),
             imageURL: $("#imageURL").val(),
         };
-        const authToken = localStorage.getItem('authToken');
 
-        $.ajax({
-            type: "POST",
-            url: "https://api.mudoapi.tech/menu",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            },
-            success: function (response) {
-                $("#modal-form").css("display", "none");
-                localStorage.setItem('successMessage', 'Berhasil menambahkan menu');
-                location.reload();
-            },
-        });
-
-        Object.keys(formData).forEach(function (key) {
-            var field = $("#" + key);
-            var label = $('label[for="' + key + '"]');
-            var errorMessage = label.text().replace(':', '').replace('*', '').trim();
-        
-            if (typeof formData[key] === 'string' && formData[key].trim() === "") {
-                displayErrorMessage(field, errorMessage + " wajib diisi");
-            } else if (key === "price" && isNaN(formData[key])) {
-                displayErrorMessage(field, errorMessage + " wajib diisi");
-            } else if (key === "type" && formData[key] === "#") {
-                displayErrorMessage(field, errorMessage + " harus dipilih");
-            }
-        });
+        var isValid = validateForm(formData);
+        if (isValid) {
+            submitForm(formData);
+        }
     });
 });
+
+function closeModal() {
+    $("#modal-form").css("display", "none");
+    $(".error-message").text("");
+}
+
+function submitForm(formData) {
+    const authToken = localStorage.getItem('authToken');
+
+    $.ajax({
+        type: "POST",
+        url: "https://api.mudoapi.tech/menu",
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        },
+        success: function (response) {
+            closeModal();
+            localStorage.setItem('successMessage', 'Menu Created Successfully');
+            location.reload();
+        },
+    });
+}
+
+function validateForm(formData) {
+    var isValid = true;
+    Object.keys(formData).forEach(function (key) {
+        var field = $("#" + key);
+        var label = $('label[for="' + key + '"]');
+        var errorMessage = label.text().replace(':', '').replace('*', '').trim();
+
+        if (typeof formData[key] === 'string' && formData[key].trim() === "") {
+            displayErrorMessage(field, errorMessage + " is required");
+            isValid = false;
+        } else if (key === "price") {
+            if (formData[key] === '') {
+                displayErrorMessage(field, errorMessage + " must be a number");
+                isValid = false;
+            }
+        } else if (key === "type" && formData[key] === "#") {
+            displayErrorMessage(field, errorMessage + " must be chosen");
+            isValid = false;
+        }
+    });
+    return isValid;
+}
 
 function displayErrorMessage(field, message) {
     $("<div>")

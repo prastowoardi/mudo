@@ -81,7 +81,8 @@ function displayErrorMessage(field, message) {
     $("<div>")
         .addClass("error-message")
         .text(message)
-        .insertAfter(field);
+        .insertAfter(field)
+        .css("font-size", "13px")
 }
 
 document.addEventListener("DOMContentLoaded", function() {

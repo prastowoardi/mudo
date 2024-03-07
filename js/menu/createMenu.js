@@ -8,13 +8,17 @@ $(document).ready(function () {
         closeModal();
     });
 
+    $("#price").on("input", function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
+
     $("#submitForm").on("click", function () {
         $(".error-message").text("");
 
         var formData = {
             name: $("#name").val(),
             description: $("#description").val(),
-            price: parseInt($("#price").val()),
+            price: $("#price").val(),
             type: $("#type").val(),
             imageURL: $("#imageURL").val(),
         };
@@ -60,9 +64,11 @@ function validateForm(formData) {
         if (typeof formData[key] === 'string' && formData[key].trim() === "") {
             displayErrorMessage(field, errorMessage + " is required");
             isValid = false;
-        } else if (key === "price" && isNaN(formData[key])) {
-            displayErrorMessage(field, errorMessage + " must be a number");
-            isValid = false;
+        } else if (key === "price") {
+            if (formData[key] === '') {
+                displayErrorMessage(field, errorMessage + " must be a number");
+                isValid = false;
+            }
         } else if (key === "type" && formData[key] === "#") {
             displayErrorMessage(field, errorMessage + " must be chosen");
             isValid = false;

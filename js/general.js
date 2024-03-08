@@ -26,3 +26,10 @@ function redirectToLogin() {
 function goBack() {
     window.history.back();
 }
+
+function logout() {
+    localStorage.removeItem('authToken');
+    window.location.href = "../../index.html";
+}
+
+document.getElementById('logout').addEventListener('click', logout);

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () {    
     $("#tambah").on("click", function () {
         $("#modal-form").css("display", "block");
         $(".error-message").text("");
@@ -87,6 +87,11 @@ function displayErrorMessage(field, message) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const successMessage = localStorage.getItem('successMessage');
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+        window.location.href = '../../index.html';
+    }
 
     if (successMessage) {
         const errorMessageElement = document.getElementById('alert');

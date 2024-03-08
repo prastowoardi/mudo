@@ -93,6 +93,11 @@ function showDetail(menuId) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const successMessage = localStorage.getItem('successMessage');
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+        window.location.href = '../../index.html';
+    }
 
     if (successMessage) {
         const errorMessageElement = document.getElementById('alert');

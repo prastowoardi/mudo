@@ -44,6 +44,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Extract the menuId from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const menuId = urlParams.get('id');
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+        window.location.href = '../../index.html';
+    }
 
     if (menuId) {
         fetchMenuDetail(menuId); // Call the function to fetch and display the menu detail

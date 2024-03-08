@@ -288,6 +288,13 @@ nav button {
   border-radius: 5px;
 }
 
+nav button#logout {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  margin: 10px;
+}
+
 nav button:hover {
   background-color: #8a8282;
   color: #fff;

@@ -163,7 +163,7 @@ function successRegistration() {
     const h2Element = document.querySelector('.signin .content h2');
 
     if (h2Element) {
-        h2Element.textContent = "Berhasil"; // Use textContent to set the text
+        h2Element.textContent = "Berhasil";
     }
 
     registrationForm.style.display = 'none';

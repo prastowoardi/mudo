@@ -31,7 +31,6 @@ function fetchMenuDetail(menuId) {
     fetch(`https://api.mudoapi.tech/menu/${menuId}`)
         .then(response => response.json())
         .then(data => {
-            // console.log('Detail Menu Response:', data);
             const menuDetail = data.data;
             displayMenuDetail(menuDetail);
         })
@@ -41,7 +40,6 @@ function fetchMenuDetail(menuId) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Extract the menuId from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const menuId = urlParams.get('id');
     const authToken = localStorage.getItem('authToken');
@@ -51,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (menuId) {
-        fetchMenuDetail(menuId); // Call the function to fetch and display the menu detail
+        fetchMenuDetail(menuId);
     }
 });
 
